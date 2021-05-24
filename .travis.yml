@@ -1,0 +1,23 @@
+services:
+  - docker
+
+before_install:
+  - docker build -t rowatk/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true rowatk/react-test yarn run test
+
+
+after_sucess:
+  - docker build -t rowatk/multi-client ./client
+  - docker build -t rowatk/multi-nginx ./nginx
+  - docker build -t rowatk/multi-server ./server
+  - docker build -t rowatk/multi-worker ./worker
+  # login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take and push images to docker hub
+  - docker push rowatk/multi-client
+  - docker push rowatk/multi-nginx
+  - docker push rowatk/multi-server
+  - docker push rowatk/multi-worker
+
