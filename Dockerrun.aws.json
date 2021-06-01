@@ -5,25 +5,29 @@
             "name": "client", 
             "image": "rowatk/multi-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "server",
             "image": "rowatk/multi-server",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "worker",
             "image": "rowatk/multi-worker",
             "hostname": "worker",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "nginx",
             "image": "rowatk/multi-nginx",
             "hostname": "nginx",
             "essential": true,
+            "memory": 128,
             "portMapping": [
                 {
                     "hostPort": 80,
